@@ -29,22 +29,10 @@ router.post('/contact', (req, res, next) => {
 // update contact
 router.put('/contact/:id', (req, res, next) => {
   // logic to update contact
-  /* const contact = {
-    $set: {
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      phone: req.body.phone,
-    }
-  }; */
-  const contact = {
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    phone: req.body.phone,
-  };
-  Contact.findOneAndUpdate({ _id: req.params.id }, contact, {upsert: true}, (err, result) => {
+  Contact.findOneAndUpdate({ _id: req.params.id }, { $set: req.body }, { new: true }, (err, result) => {
     if(err) res.json(err);
     res.json(result);
-  })
+  });
 });
 
 // delete contact
